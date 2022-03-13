@@ -1,0 +1,10 @@
+version: '2' # Docker-Compose version 2
+services: # containers
+  web: # django
+    build: . # use Dockerfile
+    image: django_web:v1
+    command: python3 manage.py runserver 0:80
+    ports: # django port
+     - "80:80"
+    volumes: # django web 저장 volume
+     - .:/web_app
