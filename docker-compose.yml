@@ -1,9 +1,21 @@
 version: '2' # Docker-Compose version 2
 services: # containers
+
+  db:
+    image: postgres
+    container_name: boiler_postgres
+    restart: always
+    environment: 
+      POSTGRES_DB: "django_boilerplate"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+        - "5432:5432"
+
   web: # django
     build: . # use Dockerfile
-    image: django_web:v1
-    container_name: django_web_container
+    image: boiler_web:v1
+    container_name: boiler_web
     command: bash -c "
         python3 manage.py collectstatic --no-input &&
         python3 manage.py makemigrations &&
@@ -16,8 +28,9 @@ services: # containers
     volumes: # django web 저장 volume
      - .:/web_app
      - ./config/gunicorn:/etc/systemd/system
+    depends_on:
+      - db
   
-
   nginx:
     image: nginx:latest
     container_name: django_nginx
