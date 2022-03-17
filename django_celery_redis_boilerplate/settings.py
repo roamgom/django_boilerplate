@@ -77,8 +77,10 @@ WSGI_APPLICATION = 'django_celery_redis_boilerplate.wsgi.application'
 
 DATABASES = {
     'default': {
+        # SQLite
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
+        # Postgres
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_boilerplate',
         'USER': 'postgres',

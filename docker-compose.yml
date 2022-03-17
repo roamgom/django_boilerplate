@@ -20,7 +20,8 @@ services: # containers
         python3 manage.py collectstatic --no-input &&
         python3 manage.py makemigrations &&
         python3 manage.py migrate &&
-        gunicorn django_celery_redis_boilerplate.wsgi:application -b 0:8000"
+        gunicorn -c config/gunicorn/base.py"
+        # python3 manage.py runserver"
     expose:
       - "8000"
     ports: # django port
@@ -33,12 +34,11 @@ services: # containers
   
   nginx:
     image: nginx:latest
-    container_name: django_nginx
+    container_name: boiler_nginx
     ports:
         - "80:80"
         - "443:443"
     volumes:
-        - ./src:/src
         - ./config/nginx:/etc/nginx/conf.d
     depends_on:
         - web
