@@ -40,5 +40,6 @@ services: # containers
         - "443:443"
     volumes:
         - ./config/nginx:/etc/nginx/conf.d
+        # - ./static/:/web_app/static
     depends_on:
         - web
